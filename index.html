@@ -3,6 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <title>Fraud Risk Dashboard</title>
+  <style>
+    canvas {
+      max-width: 100%;
+      margin: auto;
+    }
+    #riskContainer, #scoreContainer {
+      padding: 10px;
+      background: #f9fafb;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+  </style>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -32,9 +44,13 @@
     </div>
 
     <!-- Charts -->
-    <div id="charts" class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <canvas id="riskChart"></canvas>
-      <canvas id="scoreChart"></canvas>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div id="riskContainer" class="transition-all">
+        <canvas id="riskChart"></canvas>
+      </div>
+      <div id="scoreContainer" class="transition-all">
+        <canvas id="scoreChart"></canvas>
+      </div>
     </div>
   </div>
 
@@ -98,6 +114,9 @@
             plugins: { title: { display: true, text: "Distribusi Risk Level" } }
           }
         });
+        document.getElementById("riskContainer").style.display =
+          (mode === "both" || mode === "risk") ? "block" : "none";
+
       }
 
       // Bar - Score Distribution
@@ -120,6 +139,8 @@
             }
           }
         });
+        document.getElementById("scoreContainer").style.display =
+          (mode === "both" || mode === "score") ? "block" : "none";
       }
     }
   </script>
